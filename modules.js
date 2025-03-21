@@ -8,8 +8,8 @@ class World {
     }
     title;                      // 제목
     thumbnailURL;               // 월드 썸네일 URL
-    form = "s";                 // s(슬라이드)·c(클릭앤터치)
-    theme;                      // h(호러)·a(어드벤쳐)·m(미스터리)
+    form = "s";                 // 폼 s(슬라이드)·c(클릭앤터치)
+    theme;                      // 테마 h(호러)·a(어드벤쳐)·m(미스터리)
     level;                      // 난이도
     play_time;                  // 소요 시간
     is_ranking = false;         // 랭킹 여부
