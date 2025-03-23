@@ -2,24 +2,29 @@
  * 월드생성기
  */
 class World {
-    id = Math.floor(Math.random() * 100000000);
+    id = Math.floor(Math.random() * 100000000); // DB와 연동
     role = {
-        planning: null, art: null, story: null, mechanics: null, support: null
+        planning: null,     // 기획
+        art: null,          // 그림
+        story: null,        // 스토리
+        puzzle: null,       // 퍼즐
+        mechanics: null,    // 기능
+        support: null       // 도움
     }
-    title;                      // 제목
-    thumbnailURL;               // 월드 썸네일 URL
-    form = "s";                 // 폼 s(슬라이드)·c(클릭앤터치)
-    theme;                      // 테마 h(호러)·a(어드벤쳐)·m(미스터리)
-    level;                      // 난이도
-    play_time;                  // 소요 시간
-    is_ranking = false;         // 랭킹 여부
-    view = 0;                   // 조회수
-    grade = 0                   // 평점
-    gradeList = []              // 평점 점수들들
-    created_at = new Date();    // 처음 만든 날짜
-    updated_at;                 // 최근 수정된 날짜
+    title;                       // 제목
+    thumbnailURL;                // 월드 썸네일 URL
+    form = "s";                  // 폼      s(슬라이드)·c(클릭앤터치)
+    theme;                       // 테마    h(호러)·a(어드벤쳐)·m(미스터리)
+    level;                       // 난이도
+    play_time;                   // 소요 시간
+    is_ranking = false;          // 랭킹 여부
+    achievement = [];                 // 업적
+    // view = 0;                 // 조회수
+    // grade = 0;                // 평점
+    // gradeList = [];           // 평점 리스트
+    // created_at = new Date();  // 처음 만든 날짜
+    // updated_at;               // 최근 수정된 날짜
     stage = [];
-    // stage = new Stage();
     // stage = [
     //     {
     //         name: "오프닝",
@@ -38,6 +43,7 @@ class World {
     //         type:2
     //     }
     // ]
+
     /**
      * 방탈출 월드 생성
      * @param {문자} title 제목
@@ -69,6 +75,9 @@ class World {
     addView() {
         this.view++;
     }
+    getGrade(num) {
+        this.gradeList.push(num);
+    }
     setGrade() {
         let num = 0;
         this.gradeList.forEach(element => {
@@ -76,7 +85,19 @@ class World {
         });
         num / this.gradeList.length;
     }
+    createAchievement() {
+        this.achievement.push
+    }
 }
+
+
+
+class Achievement {
+    name;
+    constructor() {
+    }
+}
+
 
 
 /**
