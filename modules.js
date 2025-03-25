@@ -24,10 +24,12 @@ class World {
     isHiddenStage = false;       // 히든 스테이지 여부
     achievement = [];            // 업적
     // === 인게임 정보 ===
-    inventory = [];              // 인벤토리
-    generalVar = [];             // 일반 변수
-    switchVar = [];              // 스위치 변수
-    stage = [];                  // 스테이지
+    ingame_inf = {
+        inventory: [],             // 인벤토리
+        generalVar: [],            // 일반 변수
+        switchVar: [],             // 스위치 변수
+        stage: []                  // 스테이지
+    }
     // stage = [
     //     {
     //         name: "오프닝",
@@ -62,7 +64,7 @@ class World {
         this.title = title;
         this.thumbnailURL = thumbnailURL;
         this.theme = theme;
-        this.stage[0] = new Stage();
+        this.ingame_inf.stage[0] = new Stage(this.ingame_inf);
     }
 
     // 업적 생성
@@ -128,8 +130,9 @@ class Stage {
     closedGateMessage;  // 이동할 수 없는 게이트를 이동하려 할 때 뜨는 메시지. 예시: "{Stage.name}이(가) 잠겼습니다."
     cut = [];
 
-    constructor() {
-        this.cut[0] = new Cut();
+    constructor(ingame_inf) {
+        this.Ingame_inf = ingame_inf;
+        this.cut[0] = new Cut(ingame_inf);
     }
 
     // 컷 생성
@@ -162,8 +165,8 @@ class Cut {
     timeLimit;  // 시간제한
     setVar;
     // direction;  // 방향: 상·하·동·서·남·북 (유저가 직접 별명 지을 수 있음)
-    constructor() {
-
+    constructor(ingame_inf) {
+        this.ingame_inf = ingame_inf;
     }
     setVar() {}
     connectCut(객체) {
