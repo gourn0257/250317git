@@ -3,32 +3,33 @@
  */
 class World {
     id = Math.floor(Math.random() * 100000000); // DB와 연동
-    role = {
+    title;                       // 제목
+    thumbnailURL;                // 월드 썸네일 URL
+    description;                 // 설명
+    role = {                     // 제작자 역할
         planning: null,     // 기획
         art: null,          // 그림
         story: null,        // 스토리
         puzzle: null,       // 퍼즐
-        mechanic: null,    // 기능
+        mechanic: null,     // 기능
         support: null       // 도움
     }
-    title;                       // 제목
-    description;                 // 설명
-    thumbnailURL;                // 월드 썸네일 URL
     form = "s";                  // 폼      s(슬라이드)·c(클릭앤터치)
     theme;                       // 테마    h(호러)·a(어드벤쳐)·m(미스터리)
     tag = [];                    // 태그
+    postscript;                  // 후기
     difficulty;                  // 난이도
-    play_time;                   // 소요 시간
-    visibility = "public";         // public(공개)·unlisted(일부공개)·private(비공개)
-    is_ranking = false;          // 랭킹 표시 여부
+    playTime;                    // 소요 시간
+    visibility = "public";       // public(공개)·unlisted(일부공개)·private(비공개)
+    isRanking = false;           // 랭킹 표시 여부
+    isHiddenStage = false;       // 히든 스테이지 여부
     achievement = [];            // 업적
+    // === 인게임 정보 ===
+    time;                        // 클리어 시간 제기
     inventory = [];              // 인벤토리
-    // view = 0;                 // 조회수
-    // grade = 0;                // 평점
-    // gradeList = [];           // 평점 리스트
-    // created_at = new Date();  // 처음 만든 날짜
-    // updated_at;               // 최근 수정된 날짜
-    stage = [];
+    generalVar = [];             // 일반 변수
+    switchVar = [];              // 스위치 변수
+    stage = [];                  // 스테이지
     // stage = [
     //     {
     //         name: "오프닝",
@@ -63,9 +64,19 @@ class World {
         this.title = title;
         this.thumbnailURL = thumbnailURL;
         this.theme = theme;
-        this.stage[0] = new Stage(); 
+        this.stage[0] = new Stage();
     }
 
+    // 업적 생성
+    createAchievement() {
+        this.achievement.push(new Achievement());
+    }
+    createGeneralVar() {
+
+    }
+    createSwitchVar() {
+
+    }
     // 스테이지 생성
     createStage() {
         this.stage.push(new Stage());
@@ -79,22 +90,6 @@ class World {
     deleteStage(i) {
         this.stage[i]
     }
-    // addView() {
-    //     this.view++;
-    // }
-    // getGrade(num) {
-    //     this.gradeList.push(num);
-    // }
-    // setGrade() {
-    //     let num = 0;
-    //     this.gradeList.forEach(element => {
-    //         num += element;
-    //     });
-    //     num / this.gradeList.length;
-    // }
-    createAchievement() {
-        this.achievement.push(new Achievement());
-    }
 }
 
 
@@ -107,15 +102,31 @@ class Achievement {
 
 
 
+class GeneralVar {
+    id;
+    name;
+    type;   // 변수 자료형
+}
+class SwitchVar {
+    id;
+    name;   // 변수명
+}
+
+
+
 /**
  * 스테이지생성기
  */
 class Stage {
     name;
-    type;   // n(노말)·d(죽음)·e(엔딩)
+    type;   // n(노말)·d(죽음)·e(엔딩)·h(히든)
     imgURL;
     description;
+    timeLimit;   // 스테이지 시간제한
+    gateOpen = true;    // 이동할 수 있는지 여부
+    closedGateMessage;  // 이동할 수 없는 게이트를 이동하려 할 때 뜨는 메시지. 예시: "{Stage.name}이(가) 잠겼습니다."
     cut = [];
+
     constructor() {
         this.cut[0] = new Cut();
     }
@@ -132,20 +143,77 @@ class Stage {
     deleteCut(i) {
         this.cut
     }
+    connectStage(객체) {
+        if(!this.connectedStage) this.connectedStage = [];
+        if(객체) this.connectedStage.push(객체);
+    }
 }
+
 
 
 /**
  * 컷 생성기
  */
 class Cut {
-    name;
+    name;   // 상하·동서남북으로도 이름지을 수 있겠다
     type;   // n(노말)·p(퍼즐)·m(스테이지 이동)·f(실패)·
     imgURL;
+    timeLimit;  // 시간제한
+    setVar;
+    // direction;  // 방향: 상·하·동·서·남·북 (유저가 직접 별명 지을 수 있음)
     constructor() {
 
     }
+    setVar() {}
+    connectCut(객체) {
+        if(!this.connectedCut) this.connectedCut = [];
+        if(객체) this.connectedCut.push(객체);
+    }
+    createPuzzle() {
+        this.puzzle = new Puzzle();
+    }
 }
+
+
+
+class Puzzle {
+    id;
+    type;
+    answer;
+    hint;
+    constructor() {
+        this.transition = new Transition();
+    }
+    createPuzzle() {
+        switch(this.type) {
+            case "choice":  // 선택지
+                // 선택지 생성
+                break;
+            case "dial":    // 다이얼
+                // 다이얼 생성
+                break;
+        }
+    }
+}
+
+
+
+class Transition {
+    id;
+    time;
+}
+
+
+
+class Item {
+    name;
+    type;
+    iconURL;        // 아이템 아이콘 url
+    imgURL;         // 아이템 상세 이미지 url
+    description;
+    quantity;   // 수량
+}
+
 
 
 // 모듈 내보내기
