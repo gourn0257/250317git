@@ -14,7 +14,6 @@ class World {
         mechanic: null,     // 기능
         support: null       // 도움
     }
-    form = "s";                  // 폼      s(슬라이드)·c(클릭앤터치)
     theme;                       // 테마    h(호러)·a(어드벤쳐)·m(미스터리)
     tag = [];                    // 태그
     postscript;                  // 후기
@@ -25,7 +24,6 @@ class World {
     isHiddenStage = false;       // 히든 스테이지 여부
     achievement = [];            // 업적
     // === 인게임 정보 ===
-    time;                        // 클리어 시간 제기
     inventory = [];              // 인벤토리
     generalVar = [];             // 일반 변수
     switchVar = [];              // 스위치 변수
@@ -105,11 +103,14 @@ class Achievement {
 class GeneralVar {
     id;
     name;
-    type;   // 변수 자료형
+    type;   // 변수 자료형 (숫자형, 문자형)
+    value;  // 값
 }
 class SwitchVar {
     id;
     name;   // 변수명
+    type;   // 변수 자료형 (true, false)
+    value;  // 값
 }
 
 
