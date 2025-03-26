@@ -1,8 +1,68 @@
 /**
+ * 인게임데이터
+ */
+class Ingame_inf {
+    class_version = "0.0.1";
+    static inventory = [];              // 인벤토리
+    static intVar = [];                 // 일반 변수
+    static strVar = [];                 // 문자 변수
+    static boolVar = [];                // 스위치 변수
+    // 인벤토리 조작
+    static getItem(obj) {
+        this.inventory.push(obj);
+    }
+    static setItem(i) {
+        this.inventory[i];
+    }
+    static putItem(i) {}
+    // 변수 조작
+    static getintVar() {}
+    static getstrVar() {}
+    static getboolVar() {}
+    static setintVar() {}
+    static setstrVar() {}
+    static setboolVar() {}
+    static putintVar() {}
+    static putstrVar() {}
+    static putboolVar() {}
+}
+
+
+
+class Item {
+    name;
+    description;
+    type;
+    iconURL;        // 아이템 아이콘 url
+    imgURL;         // 아이템 상세 이미지 url
+    quantity;   // 수량
+    // 합할 수 있는 아이템
+}
+
+
+
+class IntVar {
+    name;   // 변수명
+    value;  // 값
+}
+class StrVar {
+    name;   // 변수명
+    value;  // 값
+}
+class BoolVar {
+    name;   // 변수명
+    value;  // 값
+}
+
+
+
+/**
  * 월드생성기
  */
 class World {
     id = Math.floor(Math.random() * 100000000); // DB와 연동
+    version;                     // 유저가 자신의 월드를 버전관리한다? 넣기 애매함
+    class_version = "0.0.1";     // 나중에 class World가 수정될 수 있음
     title;                       // 제목
     thumbnailURL;                // 월드 썸네일 URL
     description;                 // 설명
@@ -23,31 +83,7 @@ class World {
     isRanking = false;           // 랭킹 표시 여부
     isHiddenStage = false;       // 히든 스테이지 여부
     achievement = [];            // 업적
-    // === 인게임 정보 ===
-    ingame_inf = {
-        inventory: [],             // 인벤토리
-        generalVar: [],            // 일반 변수
-        switchVar: [],             // 스위치 변수
-        stage: []                  // 스테이지
-    }
-    // stage = [
-    //     {
-    //         name: "오프닝",
-    //         type: 1,
-    //         img: "",
-    //         cut: [
-    //             {
-    //                 name: "",
-    //                 type: 1,
-    //                 img: ""
-    //             },
-    //             {}
-    //         ]
-    //     },
-    //     {
-    //         type:2
-    //     }
-    // ]
+    stage = [];
 
     /**
      * 방탈출 월드 생성
@@ -64,22 +100,16 @@ class World {
         this.title = title;
         this.thumbnailURL = thumbnailURL;
         this.theme = theme;
-        this.ingame_inf.stage[0] = new Stage(this.ingame_inf);
+        this.stage.push(new Stage("오프닝"));
     }
 
     // 업적 생성
     createAchievement() {
         this.achievement.push(new Achievement());
     }
-    createGeneralVar() {
-
-    }
-    createSwitchVar() {
-
-    }
     // 스테이지 생성
     createStage() {
-        this.stage.push(new Stage());
+        this.ingame_inf.stage.push(new Stage());
     }
     // 스테이지 수정
     updateStage(i) {
@@ -102,21 +132,6 @@ class Achievement {
 
 
 
-class GeneralVar {
-    id;
-    name;
-    type;   // 변수 자료형 (숫자형, 문자형)
-    value;  // 값
-}
-class SwitchVar {
-    id;
-    name;   // 변수명
-    type;   // 변수 자료형 (true, false)
-    value;  // 값
-}
-
-
-
 /**
  * 스테이지생성기
  */
@@ -130,9 +145,7 @@ class Stage {
     closedGateMessage;  // 이동할 수 없는 게이트를 이동하려 할 때 뜨는 메시지. 예시: "{Stage.name}이(가) 잠겼습니다."
     cut = [];
 
-    constructor(ingame_inf) {
-        this.Ingame_inf = ingame_inf;
-        this.cut[0] = new Cut(ingame_inf);
+    constructor() {
     }
 
     // 컷 생성
@@ -147,9 +160,9 @@ class Stage {
     deleteCut(i) {
         this.cut
     }
-    connectStage(객체) {
+    connectStage(obj) {
         if(!this.connectedStage) this.connectedStage = [];
-        if(객체) this.connectedStage.push(객체);
+        if(obj) this.connectedStage.push(obj);
     }
 }
 
@@ -165,13 +178,12 @@ class Cut {
     timeLimit;  // 시간제한
     setVar;
     // direction;  // 방향: 상·하·동·서·남·북 (유저가 직접 별명 지을 수 있음)
-    constructor(ingame_inf) {
-        this.ingame_inf = ingame_inf;
+    constructor() {
     }
     setVar() {}
-    connectCut(객체) {
+    connectCut(obj) {
         if(!this.connectedCut) this.connectedCut = [];
-        if(객체) this.connectedCut.push(객체);
+        if(obj) this.connectedCut.push(obj);
     }
     createPuzzle() {
         this.puzzle = new Puzzle();
@@ -184,6 +196,8 @@ class Puzzle {
     id;
     type;
     answer;
+    correct_answer;
+    chance = 0;
     hint;
     constructor() {
         this.transition = new Transition();
@@ -192,6 +206,9 @@ class Puzzle {
         switch(this.type) {
             case "choice":  // 선택지
                 // 선택지 생성
+                break;
+            case "form":
+                // 텍스트 입력
                 break;
             case "dial":    // 다이얼
                 // 다이얼 생성
@@ -205,17 +222,11 @@ class Puzzle {
 class Transition {
     id;
     time;
-}
-
-
-
-class Item {
-    name;
-    type;
-    iconURL;        // 아이템 아이콘 url
-    imgURL;         // 아이템 상세 이미지 url
-    description;
-    quantity;   // 수량
+    condition;  // 조건
+    static controlVar() {}
+    static controlItem() {}
+    // 강제 컷 진행
+    static forcedCutProgress() {}
 }
 
 
