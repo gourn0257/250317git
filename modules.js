@@ -1,11 +1,61 @@
 /**
- * 인게임데이터
+ * 게임데이터
  */
-class Ingame_inf {
-    class_version = "0.0.1";
+class GameData {
+    static class_version = "0.0.1";
+    static item = [];           // 아이템 리스트
+    static intVar = [];         // 정수형 변수
+    static floatVar = [];       // 실수형 변수
+    static charVar = [];        // 문자형 변수
+    static boolVar = [];        // 논리형 변수
+    createItem() {}
+    createIntVar() {}
+    createCharVar() {}
+    createBoolVar() {}
+}
+
+
+
+class Item {
+    static class_version = "0.0.1";
+    name;
+    description;
+    type;
+    iconURL;        // 아이템 아이콘 url
+    imgURL;         // 아이템 상세 이미지 url
+    quantity;   // 수량
+    getItemMessage;    // 아이템 획득 시 뜨는 메세지. undeifined이면 메시지가 안 뜨게
+    // 합할 수 있는 아이템
+}
+
+
+
+class IntVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+}
+class CharVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+}
+class BoolVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+}
+
+
+
+/**
+ * 인게임데이터 생성기
+ */
+class InGameData {
+    static class_version = "0.0.1";
     static inventory = [];              // 인벤토리
     static intVar = [];                 // 일반 변수
-    static strVar = [];                 // 문자 변수
+    static charVar = [];                // 문자 변수
     static boolVar = [];                // 논리 변수
     // 인벤토리 조작
     static getItem(obj) {
@@ -17,52 +67,25 @@ class Ingame_inf {
     static putItem(i) {}
     // 변수 조작
     static getIntVar() {}
-    static getStrVar() {}
+    static getCharVar() {}
     static getBoolVar() {}
     static setIntVar() {}
-    static setStrVar() {}
+    static setCharVar() {}
     static setBoolVar() {}
     static putIntVar() {}
-    static putStrVar() {}
+    static putCharVar() {}
     static putBoolVar() {}
 }
 
 
 
-class Item {
-    name;
-    description;
-    type;
-    iconURL;        // 아이템 아이콘 url
-    imgURL;         // 아이템 상세 이미지 url
-    quantity;   // 수량
-    // 합할 수 있는 아이템
-}
-
-
-
-class IntVar {
-    name;   // 변수명
-    value;  // 값
-}
-class StrVar {
-    name;   // 변수명
-    value;  // 값
-}
-class BoolVar {
-    name;   // 변수명
-    value;  // 값
-}
-
-
-
 /**
- * 월드생성기
+ * 게임 생성기
  */
-class World {
+class Game {
+    static class_version = "0.0.1";
     id = Math.floor(Math.random() * 100000000); // DB와 연동
     version;                     // 유저가 자신의 월드를 버전관리한다? 넣기 애매함
-    class_version = "0.0.1";     // 나중에 class World가 수정될 수 있음
     title;                       // 제목
     thumbnailURL;                // 월드 썸네일 URL
     description;                 // 설명
@@ -109,7 +132,7 @@ class World {
     }
     // 스테이지 생성
     createStage() {
-        this.ingame_inf.stage.push(new Stage());
+        this.stage.push(new Stage());
     }
     // 스테이지 수정
     updateStage(i) {
@@ -125,6 +148,7 @@ class World {
 
 
 class Achievement {
+    static class_version = "0.0.1";
     name;
     constructor() {
     }
@@ -133,9 +157,10 @@ class Achievement {
 
 
 /**
- * 스테이지생성기
+ * 스테이지 생성기
  */
 class Stage {
+    static class_version = "0.0.1";
     name;
     type;   // n(노말)·d(죽음)·e(엔딩)·h(히든)
     imgURL;
@@ -172,6 +197,7 @@ class Stage {
  * 컷 생성기
  */
 class Cut {
+    static class_version = "0.0.1";
     name;   // 상하·동서남북으로도 이름지을 수 있겠다
     type;   // n(노말)·p(퍼즐)·m(스테이지 이동)·f(실패)·
     imgURL;
@@ -193,6 +219,7 @@ class Cut {
 
 
 class Puzzle {
+    static class_version = "0.0.1";
     id;
     type;
     answer;
@@ -220,6 +247,7 @@ class Puzzle {
 
 
 class Transition {
+    static class_version = "0.0.1";
     id;
     time;
     condition;  // 조건
@@ -232,4 +260,4 @@ class Transition {
 
 
 // 모듈 내보내기
-export { World, Stage, Cut }
+export { Game, Stage, Cut }

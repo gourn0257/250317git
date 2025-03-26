@@ -39,3 +39,7 @@ class World를 두 개로 하는 게 낫다
 class World_a
 class World_b
 이렇게 하는 게 낫다
+
+GameData에 실수형 변수도 포함되어야 할까
+
+클래스마다 class_version이 있는데 npm처럼 package.json 같은 데다가 저장하게 할까
