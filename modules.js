@@ -6,7 +6,7 @@ class Ingame_inf {
     static inventory = [];              // 인벤토리
     static intVar = [];                 // 일반 변수
     static strVar = [];                 // 문자 변수
-    static boolVar = [];                // 스위치 변수
+    static boolVar = [];                // 논리 변수
     // 인벤토리 조작
     static getItem(obj) {
         this.inventory.push(obj);
@@ -16,15 +16,15 @@ class Ingame_inf {
     }
     static putItem(i) {}
     // 변수 조작
-    static getintVar() {}
-    static getstrVar() {}
-    static getboolVar() {}
-    static setintVar() {}
-    static setstrVar() {}
-    static setboolVar() {}
-    static putintVar() {}
-    static putstrVar() {}
-    static putboolVar() {}
+    static getIntVar() {}
+    static getStrVar() {}
+    static getBoolVar() {}
+    static setIntVar() {}
+    static setStrVar() {}
+    static setBoolVar() {}
+    static putIntVar() {}
+    static putStrVar() {}
+    static putBoolVar() {}
 }
 
 
