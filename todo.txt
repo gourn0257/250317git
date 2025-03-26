@@ -23,7 +23,7 @@ World.role 안에 있는 키값에 user_name 대신 user_id를 저장. 유저 �
 
 직접 데이터에 스테이지 수를 넣지 말고 스테이지.length 라던가 반복문 써서 출력하게
 
-connectStage, connectCut 메소드 인자 값을 객체로 받는 이유는 컷 위치가 stage[i].cut[i]이기 때문
+connectStage, connectCut 메소드 인자 값을 객체로 받는 이유는 컷 위치가 "stage[i].cut[i]"이기 때문
 
 Stage.timeLimit, Cut.timeLimit에 값이 아무것도 없으면 false로 생각하면 된다
 
