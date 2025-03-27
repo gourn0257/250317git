@@ -6,75 +6,90 @@ class GameData {
     static item = [];           // 아이템 리스트
     static intVar = [];         // 정수형 변수
     static floatVar = [];       // 실수형 변수
-    static charVar = [];        // 문자형 변수
+    static strVar = [];         // 문자형 변수
     static boolVar = [];        // 논리형 변수
-    createItem() {}
-    createIntVar() {}
-    createCharVar() {}
-    createBoolVar() {}
-}
-
-
-
-class Item {
-    static class_version = "0.0.1";
-    name;
-    description;
-    type;
-    iconURL;        // 아이템 아이콘 url
-    imgURL;         // 아이템 상세 이미지 url
-    quantity;   // 수량
-    getItemMessage;    // 아이템 획득 시 뜨는 메세지. undeifined이면 메시지가 안 뜨게
-    // 합할 수 있는 아이템
-}
-
-
-
-class IntVar {
-    static class_version = "0.0.1";
-    name;   // 변수명
-    value;  // 값
-}
-class CharVar {
-    static class_version = "0.0.1";
-    name;   // 변수명
-    value;  // 값
-}
-class BoolVar {
-    static class_version = "0.0.1";
-    name;   // 변수명
-    value;  // 값
+    createItem() {
+        this.item.push(new Item());
+    }
+    createIntVar() {
+        this.intVar.push(new IntVar());
+    }
+    createStrVar() {
+        this.strVar.push(new StrVar());
+    }
+    createBoolVar() {
+        this.boolVar.push(new BoolVar());
+    }
+    // 변수 조작
+    static getIntVar() {}
+    static getStrVar() {}
+    static getBoolVar() {}
+    static setIntVar() {}
+    static setStrVar() {}
+    static setBoolVar() {}
+    static putIntVar() {}
+    static putStrVar() {}
+    static putBoolVar() {}
 }
 
 
 
 /**
- * 인게임데이터 생성기
+ * 아이템 생성기
  */
-class InGameData {
+class Item {
     static class_version = "0.0.1";
-    static inventory = [];              // 인벤토리
-    static intVar = [];                 // 일반 변수
-    static charVar = [];                // 문자 변수
-    static boolVar = [];                // 논리 변수
-    // 인벤토리 조작
-    static getItem(obj) {
-        this.inventory.push(obj);
+    name;
+    description;
+    type;
+    iconURL;            // 아이템 아이콘 url
+    imgURL;             // 아이템 상세 이미지 url
+    quantity;           // 수량
+    getItemMessage;     // 아이템 획득 시 뜨는 메세지. undefined이면 메시지가 안 뜨게
+    // 합칠 수 있는 아이템 여부
+    constructor(name, description, type, iconURL, imgURL, quantity, getItemMessage) {
     }
-    static setItem(i) {
-        this.inventory[i];
+}
+
+
+/**
+ * 변수 생성기
+ */
+class IntVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+    constructor(name, value) {
+        this.name = name;
+        if(typeof value == 'number') this.value = value;
+        else {
+            this.value = Number(value);
+        };
     }
-    static putItem(i) {}
-    // 변수 조작
-    static getIntVar() {}
-    static getCharVar() {}
-    static getBoolVar() {}
-    static setIntVar() {}
-    static setCharVar() {}
-    static setBoolVar() {}
-    static putIntVar() {}
-    static putCharVar() {}
-    static putBoolVar() {}
+}
+class StrVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+    constructor(name, value) {
+        this.name = name;
+        if(typeof value == 'string') this.value = value;
+        else {
+            this.value = String(value);
+        };
+    }
+}
+class BoolVar {
+    static class_version = "0.0.1";
+    name;   // 변수명
+    value;  // 값
+    constructor(name, value) {
+        this.name = name;
+        if(typeof value == 'boolean') this.value = value;
+        else {
+            this.value = Boolean(value);
+        };
+    }
 }
 
 
@@ -87,15 +102,15 @@ class Game {
     id = Math.floor(Math.random() * 100000000); // DB와 연동
     version;                     // 유저가 자신의 월드를 버전관리한다? 넣기 애매함
     title;                       // 제목
-    thumbnailURL;                // 월드 썸네일 URL
+    thumbnailURL;                // 게임 썸네일 URL
     description;                 // 설명
     role = {                     // 제작자 역할
-        planning: null,     // 기획
-        art: null,          // 그림
-        story: null,        // 스토리
-        puzzle: null,       // 퍼즐
-        mechanic: null,     // 기능
-        support: null       // 도움
+        planning: [],     // 기획
+        art: [],          // 그림
+        story: [],        // 스토리
+        puzzle: [],       // 퍼즐
+        mechanic: [],     // 기능
+        support: []       // 도움
     }
     theme;                       // 테마    h(호러)·a(어드벤쳐)·m(미스터리)
     tag = [];                    // 태그
@@ -106,7 +121,8 @@ class Game {
     isRanking = false;           // 랭킹 표시 여부
     isHiddenStage = false;       // 히든 스테이지 여부
     achievement = [];            // 업적
-    stage = [];
+    static inventory = [];
+    static stage = [];
 
     /**
      * 방탈출 월드 생성
@@ -143,10 +159,22 @@ class Game {
     deleteStage(i) {
         this.stage[i]
     }
+    
+    // 인벤토리 조작
+    static getItem(obj) {
+        this.inventory.push(obj);
+    }
+    static setItem(i) {
+        this.inventory[i];
+    }
+    static putItem(i) {}
 }
 
 
 
+/**
+ * 업적 생성기
+ */
 class Achievement {
     static class_version = "0.0.1";
     name;
@@ -240,6 +268,7 @@ class Puzzle {
             case "dial":    // 다이얼
                 // 다이얼 생성
                 break;
+            default:
         }
     }
 }
@@ -260,4 +289,4 @@ class Transition {
 
 
 // 모듈 내보내기
-export { Game, Stage, Cut }
+export { GameData, Game, Stage, Cut }
